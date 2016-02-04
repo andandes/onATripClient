@@ -47,6 +47,7 @@ angular
           UserName: $scope.UserName,
           Password: $scope.Password
       };
+      // test
       var login = Restangular.one("users/login").customPOST({ UserName: "david", Password: "david" }).then(function (data) {
           alert(data.Token);
       });;
