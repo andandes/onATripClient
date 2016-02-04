@@ -41,15 +41,23 @@ angular
 	})
   .controller('MainCtrl', function($scope, Restangular) {
   // ...
-}).controller('LoginCtrl', function($scope, Restangular) {
+  }).controller('LoginCtrl', function ($scope, Restangular) {
+      $scope.user = {};
   $scope.loginMethod = function () { 
-      var loginObj = {
-          UserName: $scope.UserName,
-          Password: $scope.Password
-      };
-      // test
-      var login = Restangular.one("users/login").customPOST({ UserName: "david", Password: "david" }).then(function (data) {
-          alert(data.Token);
+      
+      var o = {Username:$scope.user.userName, Password:$scope.user.password};
+      
+      var login = Restangular.one("login");
+      login.post('', o).then(function (data) {
+          
+            // po prihlaseni se nastavi automaticky authorization header
+          Restangular.withConfig(function (RestangularConfigurer) {
+              RestangularConfigurer.setDefaultHeaders({ Authorization: data.Token });
+              alert(data.Token);
+          });
+
+
+
       });;
 
 
